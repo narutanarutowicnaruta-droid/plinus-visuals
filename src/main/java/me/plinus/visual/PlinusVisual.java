@@ -14,7 +14,11 @@ public class PlinusVisual implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
 
             while (ModKeys.CLICK_GUI.consumeClick()) {
-                System.out.println("[Plinus Visual] ClickGUI pressed!");
+                if (client.screen instanceof VisualScreen) {
+                    client.setScreen(null);
+                } else {
+                    client.setScreen(new VisualScreen());
+                }
             }
 
             while (ModKeys.FREECAM.consumeClick()) {
