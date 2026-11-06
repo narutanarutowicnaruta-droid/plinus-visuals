@@ -1,3 +1,4 @@
+
 package me.plinus.visual;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
