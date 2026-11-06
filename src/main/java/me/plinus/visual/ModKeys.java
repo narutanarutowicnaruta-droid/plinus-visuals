@@ -1,40 +1,113 @@
 
 package me.plinus.visual;
 
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.KeyMapping;
-import org.lwjgl.glfw.GLFW;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.text.Text;
 
-public class ModKeys {
+public class VisualScreen extends Screen {
 
-    public static KeyMapping CLICK_GUI;
-    public static KeyMapping FREECAM;
-    public static KeyMapping WAYPOINT;
+    public VisualScreen() {
+        super(Text.literal("Plinus Visual"));
+    }
 
-    public static void register() {
+    @Override
+    protected void init() {
+        int x = this.width / 2 - 100;
+        int y = this.height / 2 - 65;
 
-        CLICK_GUI = KeyBindingHelper.registerKeyBinding(
-            new KeyMapping(
-                "key.plinus_visual.clickgui",
-                GLFW.GLFW_KEY_RIGHT_SHIFT,
-                KeyMapping.Category.MISC
-            )
+        addDrawableChild(createButton(
+            "Full Bright", FeatureSettings.FULL_BRIGHT,
+            x, y, value -> FeatureSettings.FULL_BRIGHT = value
+        ));
+
+        addDrawableChild(createButton(
+            "Hit Marker", FeatureSettings.HIT_MARKER,
+            x, y + 25, value -> FeatureSettings.HIT_MARKER = value
+        ));
+
+        addDrawableChild(createButton(
+            "Particles", FeatureSettings.PARTICLES,
+            x, y + 50, value -> FeatureSettings.PARTICLES = value
+        ));
+
+        addDrawableChild(createButton(
+            "Waypoints", FeatureSettings.WAYPOINTS,
+            x, y + 75, value -> FeatureSettings.WAYPOINTS = value
+        ));
+
+        addDrawableChild(createButton(
+            "Smooth Animation", FeatureSettings.SMOOTH_ANIMATION,
+            x, y + 100, value -> FeatureSettings.SMOOTH_ANIMATION = value
+        ));
+
+        addDrawableChild(ButtonWidget.builder(
+            Text.literal("Закрыть"),
+            button -> close()
+        ).dimensions(x, y + 130, 200, 20).build());
+    }
+
+    private ButtonWidget createButton(
+        String name,
+        boolean enabled,
+        int x,
+        int y,
+        java.util.function.Consumer<Boolean> action
+    ) {
+        return ButtonWidget.builder(
+            status(name, enabled),
+            button -> {
+                boolean next = !enabled;
+                action.accept(next);
+                button.setMessage(status(name, next));
+            }
+        ).dimensions(x, y, 200, 20).build();
+    }
+
+    private Text status(String name, boolean enabled) {
+        return Text.literal(
+            name + " [" + (enabled ? "ON" : "OFF") + "]"
+        );
+    }
+
+    @Override
+    public void render(
+        DrawContext context,
+        int mouseX,
+        int mouseY,
+        float delta
+    ) {
+        context.fill(0, 0, width, height, 0x99000000);
+
+        int x = width / 2;
+        int y = height / 2;
+
+        context.fill(
+            x - 115, y - 105,
+            x + 115, y + 160,
+            0xEE171717
         );
 
-        FREECAM = KeyBindingHelper.registerKeyBinding(
-            new KeyMapping(
-                "key.plinus_visual.freecam",
-                GLFW.GLFW_KEY_LEFT_ALT,
-                KeyMapping.Category.MISC
-            )
+        context.fill(
+            x - 115, y - 105,
+            x + 115, y - 75,
+            0xFF7736C9
         );
 
-        WAYPOINT = KeyBindingHelper.registerKeyBinding(
-            new KeyMapping(
-                "key.plinus_visual.waypoint",
-                GLFW.GLFW_KEY_B,
-                KeyMapping.Category.MISC
-            )
+        context.drawCenteredTextWithShadow(
+            textRenderer,
+            "PLINUS VISUAL",
+            x,
+            y - 95,
+            0xFFFFFFFF
         );
+
+        super.render(context, mouseX, mouseY, delta);
+    }
+
+    @Override
+    public boolean shouldPause() {
+        return false;
     }
 }
