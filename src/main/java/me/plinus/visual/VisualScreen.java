@@ -1,3 +1,4 @@
+
 package me.plinus.visual;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -55,7 +56,9 @@ public class VisualScreen extends Screen {
     }
 
     private Component status(String name, boolean enabled) {
-        return Component.literal(name + " [" + (enabled ? "ON" : "OFF") + "]");
+        return Component.literal(
+            name + " [" + (enabled ? "ON" : "OFF") + "]"
+        );
     }
 
     @Override
@@ -65,7 +68,7 @@ public class VisualScreen extends Screen {
         int mouseY,
         float partialTick
     ) {
-        // Обычный тёмный фон. Без размытия!
+        // Обычный тёмный фон без размытия
         graphics.fill(
             0, 0, this.width, this.height,
             0x99000000
@@ -74,12 +77,14 @@ public class VisualScreen extends Screen {
         int x = this.width / 2;
         int y = this.height / 2;
 
+        // Панель меню
         graphics.fill(
             x - 115, y - 95,
             x + 115, y + 140,
             0xEE171717
         );
 
+        // Фиолетовая шапка
         graphics.fill(
             x - 115, y - 95,
             x + 115, y - 65,
@@ -89,7 +94,8 @@ public class VisualScreen extends Screen {
         graphics.drawCenteredString(
             this.font,
             "PLINUS VISUAL",
-            x, y - 85,
+            x,
+            y - 85,
             0xFFFFFFFF
         );
 
