@@ -15,7 +15,7 @@ public class ModKeys {
         CLICK_GUI = KeyBindingHelper.registerKeyBinding(
             new KeyMapping(
                 "key.plinus_visual.clickgui",
-                GLFW.GLFW_KEY_LEFT_SHIFT,
+                GLFW.GLFW_KEY_RIGHT_SHIFT,
                 KeyMapping.Category.MISC
             )
         );
@@ -23,7 +23,7 @@ public class ModKeys {
         FREECAM = KeyBindingHelper.registerKeyBinding(
             new KeyMapping(
                 "key.plinus_visual.freecam",
-                GLFW.GLFW_KEY_RIGHT_ALT,
+                GLFW.GLFW_KEY_LEFT_ALT,
                 KeyMapping.Category.MISC
             )
         );
