@@ -1,10 +1,13 @@
+
 {
   "schemaVersion": 1,
   "id": "plinus_visual",
-  "version": "${version}",
+  "version": "1.0.0",
   "name": "Plinus Visual",
   "description": "Visual client mod for Minecraft 1.21.11",
-  "authors": ["Plinus"],
+  "authors": [
+    "Plinus"
+  ],
   "environment": "client",
   "entrypoints": {
     "client": [
