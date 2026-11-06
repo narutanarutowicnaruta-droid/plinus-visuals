@@ -19,44 +19,32 @@ public class VisualScreen extends Screen {
         addRenderableWidget(Button.builder(
             status("Full Bright", FeatureSettings.FULL_BRIGHT),
             button -> {
-                FeatureSettings.FULL_BRIGHT =
-                    !FeatureSettings.FULL_BRIGHT;
-                button.setMessage(
-                    status("Full Bright", FeatureSettings.FULL_BRIGHT)
-                );
+                FeatureSettings.FULL_BRIGHT = !FeatureSettings.FULL_BRIGHT;
+                button.setMessage(status("Full Bright", FeatureSettings.FULL_BRIGHT));
             }
         ).bounds(x, y, 200, 20).build());
 
         addRenderableWidget(Button.builder(
             status("Hit Marker", FeatureSettings.HIT_MARKER),
             button -> {
-                FeatureSettings.HIT_MARKER =
-                    !FeatureSettings.HIT_MARKER;
-                button.setMessage(
-                    status("Hit Marker", FeatureSettings.HIT_MARKER)
-                );
+                FeatureSettings.HIT_MARKER = !FeatureSettings.HIT_MARKER;
+                button.setMessage(status("Hit Marker", FeatureSettings.HIT_MARKER));
             }
         ).bounds(x, y + 25, 200, 20).build());
 
         addRenderableWidget(Button.builder(
             status("Particles", FeatureSettings.PARTICLES),
             button -> {
-                FeatureSettings.PARTICLES =
-                    !FeatureSettings.PARTICLES;
-                button.setMessage(
-                    status("Particles", FeatureSettings.PARTICLES)
-                );
+                FeatureSettings.PARTICLES = !FeatureSettings.PARTICLES;
+                button.setMessage(status("Particles", FeatureSettings.PARTICLES));
             }
         ).bounds(x, y + 50, 200, 20).build());
 
         addRenderableWidget(Button.builder(
             status("Waypoints", FeatureSettings.WAYPOINTS),
             button -> {
-                FeatureSettings.WAYPOINTS =
-                    !FeatureSettings.WAYPOINTS;
-                button.setMessage(
-                    status("Waypoints", FeatureSettings.WAYPOINTS)
-                );
+                FeatureSettings.WAYPOINTS = !FeatureSettings.WAYPOINTS;
+                button.setMessage(status("Waypoints", FeatureSettings.WAYPOINTS));
             }
         ).bounds(x, y + 75, 200, 20).build());
 
@@ -67,9 +55,7 @@ public class VisualScreen extends Screen {
     }
 
     private Component status(String name, boolean enabled) {
-        return Component.literal(
-            name + " [" + (enabled ? "ON" : "OFF") + "]"
-        );
+        return Component.literal(name + " [" + (enabled ? "ON" : "OFF") + "]");
     }
 
     @Override
@@ -79,10 +65,9 @@ public class VisualScreen extends Screen {
         int mouseY,
         float partialTick
     ) {
-        // Лёгкий полупрозрачный фон без размытия
+        // Обычный тёмный фон. Без размытия!
         graphics.fill(
-            0, 0,
-            this.width, this.height,
+            0, 0, this.width, this.height,
             0x99000000
         );
 
@@ -104,8 +89,7 @@ public class VisualScreen extends Screen {
         graphics.drawCenteredString(
             this.font,
             "PLINUS VISUAL",
-            x,
-            y - 85,
+            x, y - 85,
             0xFFFFFFFF
         );
 
