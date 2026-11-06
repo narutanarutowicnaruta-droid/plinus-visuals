@@ -1,6 +1,7 @@
 package me.plinus.visual;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -11,70 +12,64 @@ public class VisualScreen extends Screen {
     }
 
     @Override
+    protected void init() {
+        int x = this.width / 2 - 100;
+        int y = this.height / 2 - 65;
+
+        addRenderableWidget(Button.builder(
+            getStatus("Full Bright", FeatureSettings.FULL_BRIGHT),
+            button -> {
+                FeatureSettings.FULL_BRIGHT = !FeatureSettings.FULL_BRIGHT;
+                button.setMessage(getStatus("Full Bright", FeatureSettings.FULL_BRIGHT));
+            }
+        ).bounds(x, y, 200, 20).build());
+
+        addRenderableWidget(Button.builder(
+            getStatus("Hit Marker", FeatureSettings.HIT_MARKER),
+            button -> {
+                FeatureSettings.HIT_MARKER = !FeatureSettings.HIT_MARKER;
+                button.setMessage(getStatus("Hit Marker", FeatureSettings.HIT_MARKER));
+            }
+        ).bounds(x, y + 25, 200, 20).build());
+
+        addRenderableWidget(Button.builder(
+            getStatus("Particles", FeatureSettings.PARTICLES),
+            button -> {
+                FeatureSettings.PARTICLES = !FeatureSettings.PARTICLES;
+                button.setMessage(getStatus("Particles", FeatureSettings.PARTICLES));
+            }
+        ).bounds(x, y + 50, 200, 20).build());
+
+        addRenderableWidget(Button.builder(
+            getStatus("Waypoints", FeatureSettings.WAYPOINTS),
+            button -> {
+                FeatureSettings.WAYPOINTS = !FeatureSettings.WAYPOINTS;
+                button.setMessage(getStatus("Waypoints", FeatureSettings.WAYPOINTS));
+            }
+        ).bounds(x, y + 75, 200, 20).build());
+    }
+
+    private Component getStatus(String name, boolean enabled) {
+        return Component.literal(
+            name + ": " + (enabled ? "ON" : "OFF")
+        );
+    }
+
+    @Override
     public void render(
-            GuiGraphics graphics,
-            int mouseX,
-            int mouseY,
-            float partialTick
+        GuiGraphics graphics,
+        int mouseX,
+        int mouseY,
+        float partialTick
     ) {
         this.renderBackground(graphics, mouseX, mouseY, partialTick);
-
-        int centerX = this.width / 2;
-        int centerY = this.height / 2;
-
-        int left = centerX - 150;
-        int top = centerY - 100;
-
-        graphics.fill(
-            left, top,
-            left + 300, top + 200,
-            0xEE151515
-        );
-
-        graphics.fill(
-            left, top,
-            left + 300, top + 28,
-            0xFF7B35C9
-        );
 
         graphics.drawCenteredString(
             this.font,
             "PLINUS VISUAL",
-            centerX,
-            top + 9,
-            0xFFFFFFFF
-        );
-
-        graphics.drawString(
-            this.font,
-            "Visuals",
-            left + 15,
-            top + 45,
-            0xFFFFFFFF
-        );
-
-        graphics.drawString(
-            this.font,
-            "PvP",
-            left + 15,
-            top + 70,
-            0xFFFFFFFF
-        );
-
-        graphics.drawString(
-            this.font,
-            "YouTuber Tools",
-            left + 15,
-            top + 95,
-            0xFFFFFFFF
-        );
-
-        graphics.drawString(
-            this.font,
-            "Plinus Visual 1.0.0",
-            left + 15,
-            top + 175,
-            0xFFAAAAAA
+            this.width / 2,
+            this.height / 2 - 95,
+            0xFFB56AFF
         );
 
         super.render(graphics, mouseX, mouseY, partialTick);
