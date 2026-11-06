@@ -17,41 +17,58 @@ public class VisualScreen extends Screen {
         int y = this.height / 2 - 65;
 
         addRenderableWidget(Button.builder(
-            getStatus("Full Bright", FeatureSettings.FULL_BRIGHT),
+            status("Full Bright", FeatureSettings.FULL_BRIGHT),
             button -> {
-                FeatureSettings.FULL_BRIGHT = !FeatureSettings.FULL_BRIGHT;
-                button.setMessage(getStatus("Full Bright", FeatureSettings.FULL_BRIGHT));
+                FeatureSettings.FULL_BRIGHT =
+                    !FeatureSettings.FULL_BRIGHT;
+                button.setMessage(
+                    status("Full Bright", FeatureSettings.FULL_BRIGHT)
+                );
             }
         ).bounds(x, y, 200, 20).build());
 
         addRenderableWidget(Button.builder(
-            getStatus("Hit Marker", FeatureSettings.HIT_MARKER),
+            status("Hit Marker", FeatureSettings.HIT_MARKER),
             button -> {
-                FeatureSettings.HIT_MARKER = !FeatureSettings.HIT_MARKER;
-                button.setMessage(getStatus("Hit Marker", FeatureSettings.HIT_MARKER));
+                FeatureSettings.HIT_MARKER =
+                    !FeatureSettings.HIT_MARKER;
+                button.setMessage(
+                    status("Hit Marker", FeatureSettings.HIT_MARKER)
+                );
             }
         ).bounds(x, y + 25, 200, 20).build());
 
         addRenderableWidget(Button.builder(
-            getStatus("Particles", FeatureSettings.PARTICLES),
+            status("Particles", FeatureSettings.PARTICLES),
             button -> {
-                FeatureSettings.PARTICLES = !FeatureSettings.PARTICLES;
-                button.setMessage(getStatus("Particles", FeatureSettings.PARTICLES));
+                FeatureSettings.PARTICLES =
+                    !FeatureSettings.PARTICLES;
+                button.setMessage(
+                    status("Particles", FeatureSettings.PARTICLES)
+                );
             }
         ).bounds(x, y + 50, 200, 20).build());
 
         addRenderableWidget(Button.builder(
-            getStatus("Waypoints", FeatureSettings.WAYPOINTS),
+            status("Waypoints", FeatureSettings.WAYPOINTS),
             button -> {
-                FeatureSettings.WAYPOINTS = !FeatureSettings.WAYPOINTS;
-                button.setMessage(getStatus("Waypoints", FeatureSettings.WAYPOINTS));
+                FeatureSettings.WAYPOINTS =
+                    !FeatureSettings.WAYPOINTS;
+                button.setMessage(
+                    status("Waypoints", FeatureSettings.WAYPOINTS)
+                );
             }
         ).bounds(x, y + 75, 200, 20).build());
+
+        addRenderableWidget(Button.builder(
+            Component.literal("Закрыть"),
+            button -> onClose()
+        ).bounds(x, y + 105, 200, 20).build());
     }
 
-    private Component getStatus(String name, boolean enabled) {
+    private Component status(String name, boolean enabled) {
         return Component.literal(
-            name + ": " + (enabled ? "ON" : "OFF")
+            name + " [" + (enabled ? "ON" : "OFF") + "]"
         );
     }
 
@@ -62,14 +79,34 @@ public class VisualScreen extends Screen {
         int mouseY,
         float partialTick
     ) {
-        this.renderBackground(graphics, mouseX, mouseY, partialTick);
+        // Лёгкий полупрозрачный фон без размытия
+        graphics.fill(
+            0, 0,
+            this.width, this.height,
+            0x99000000
+        );
+
+        int x = this.width / 2;
+        int y = this.height / 2;
+
+        graphics.fill(
+            x - 115, y - 95,
+            x + 115, y + 140,
+            0xEE171717
+        );
+
+        graphics.fill(
+            x - 115, y - 95,
+            x + 115, y - 65,
+            0xFF7736C9
+        );
 
         graphics.drawCenteredString(
             this.font,
             "PLINUS VISUAL",
-            this.width / 2,
-            this.height / 2 - 95,
-            0xFFB56AFF
+            x,
+            y - 85,
+            0xFFFFFFFF
         );
 
         super.render(graphics, mouseX, mouseY, partialTick);
